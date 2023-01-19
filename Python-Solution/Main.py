@@ -24,22 +24,22 @@ class Login:
         self.password = ''.join(pass1)
         time.sleep(2)#Pause's for 2 second
         
-    def Login(self):
+    def Login(self,userPath,PasswordPath,ButtonPath):
         # Username Field
-        uerfiled = driver.find_element("xpath",value="//*[@id=\"username\"]")
+        uerfiled = driver.find_element("xpath",value=userPath)
         uerfiled.send_keys(self.username)
         # Password Field
-        pasw = driver.find_element("xpath",value="//*[@id=\"password\"]")
+        pasw = driver.find_element("xpath",value=PasswordPath)
         pasw.send_keys(self.password)
         # Click to Login
-        login  = driver.find_element("xpath",value="//*[@id=\"log-in\"]")
+        login  = driver.find_element("xpath",value=ButtonPath)
         time.sleep(1)#Pause's for a second
         login.click()
         time.sleep(2)#Pause's for 2 second
         print("Login Completed............. \nLoading DashBoard..........\nSorting Amount..........  ")
-    def Sort(self):
+    def Sort(self,ElementsPath,AmountButton):
         arr = []
-        containers= driver.find_elements("xpath",value ="//tbody/tr/td[5]")
+        containers= driver.find_elements("xpath",value =ElementsPath)
         # print(containers)
         for container in containers:
             title =container.find_element("xpath",value='./span').text
@@ -47,11 +47,11 @@ class Login:
             lStr = ''.join([str(elem) for elem in title])
             arr.append(int(lStr))
         if(arr != arr.sort()):
-            button = driver.find_element("xpath",value="//*[@id=\"amount\"]")
+            button = driver.find_element("xpath",value=AmountButton)
             button.click()
         print("Sorting Completed.")
         print("program.Closed();")
 
 nw =Login("https://sakshingp.github.io/assignment/login.html")
-nw.Login()
-nw.Sort()
+nw.Login("//*[@id=\"username\"]","//*[@id=\"password\"]","//*[@id=\"log-in\"]")
+nw.Sort("//tbody/tr/td[5]","//*[@id=\"amount\"]")
